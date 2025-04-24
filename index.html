@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Animation Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 2rem;
+      background-color: #f9f9f9;
+    }
+
+    button {
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      background-color: #0056b3;
+    }
+
+    img {
+      display: block;
+      margin: 2rem auto;
+      width: 150px;
+      transition: transform 1s ease-in-out;
+    }
+
+    img.animate {
+      animation: bounce 0.8s ease;
+    }
+
+    @keyframes bounce {
+      0%   { transform: translateY(0); }
+      50%  { transform: translateY(-60px); }
+      100% { transform: translateY(0); }
+    }
+
+    label {
+      display: block;
+      margin: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Welcome to Animations 🌟</h2>
+  
+  <label>
+    <input type="checkbox" id="toggle-animation" />
+    Enable Animations
+  </label>
+
+  <button id="animate-btn">Click here!</button>
+
+  <img src="img.jpeg" id="animated-img" alt="Demo Image" />
+
+  <script>
+    const toggle = document.getElementById('toggle-animation');
+    const btn = document.getElementById('animate-btn');
+    const img = document.getElementById('animated-img');
+
+    // Load preference from localStorage
+    document.addEventListener('DOMContentLoaded', () => {
+      const isEnabled = localStorage.getItem('animationsEnabled') === 'true';
+      toggle.checked = isEnabled;
+    });
+
+    // Save preference when toggled
+    toggle.addEventListener('change', () => {
+      localStorage.setItem('animationsEnabled', toggle.checked);
+    });
+
+    // Trigger animation on click
+    btn.addEventListener('click', () => {
+      const isEnabled = localStorage.getItem('animationsEnabled') === 'true';
+
+      if (isEnabled) {
+        img.classList.remove('animate'); // reset
+        void img.offsetWidth; // reflow to retrigger animation
+        img.classList.add('animate'); // trigger
+      } else {
+        alert("Enable animations to see the magic! 🎇");
+      }
+    });
+  </script>
+
+</body>
+</html>
